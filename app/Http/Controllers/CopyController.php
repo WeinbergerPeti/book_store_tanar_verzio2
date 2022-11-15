@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Copy;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CopyController extends Controller
 {
@@ -71,5 +72,76 @@ class CopyController extends Controller
         $copies = Copy::all();
         //copy mappában list blade
         return view('copy.list', ['copies' => $copies]);
+    }
+
+    // 1. feladat
+    public function bookCopyCount($title)
+    {
+        $copies = DB::table("copies as c")
+        ->join("books as b", "c.book_id", "=", "b.book_id")
+        ->where("b.title", "=", $title)
+        ->count();
+        return $copies;
+    }
+
+    // 2. feladat
+    // Add meg a keménykötésű példányokat szerzővel és címmel! (ha megy, akkor a bármilyet tudj megadni paraméterrel; kemény: 1, puha: 0, hardcovered a mező)
+    public function hardCover($hardcovered)
+    {
+        $copies = DB::table("copies as c")
+        ->select("b.author", "b.title")
+        ->join("books as b", "c.book_id", "=", "b.book_id")
+        ->where("c.hardcovered", "=", $hardcovered)
+        ->get()
+        ->count($hardcovered);
+        return $copies;
+    }
+
+    // 3. feladat
+    // Bizonyos évben kiadott példányok névvel és címmel kiíratása.
+    public function yearCopies($ev)
+    {
+        $copies = DB::table("copies as c")
+        ->select("b.author", "b.title")
+        ->join("books as b", "c.book_id", "=", "b.book_id")
+        ->where("c.publication", "=", $ev)
+        ->get();
+        return $copies;
+    }
+    // 4. feladat
+    // Raktárban lévő példányok száma.
+    public function raktarban()
+    {
+        $copies = DB::table("copies as c")
+        ->join("books as b", "c.book_id", "=", "b.book_id")
+        ->where("c.status", "=", 0)
+        ->orWhere("c.status", "=", 2)
+        ->count();
+        return $copies;
+    }
+
+    // 5. feladat
+    // Bizonyos évben kiadott, bizonyos könyv raktárban lévő darabjainak a száma.
+    public function raktarbanLevoKonyv($ev, $id)
+    {
+        $copies = DB::table("copies as c")
+        ->where("publication", "=", $ev /* "and", "book_id", "=", $id */)
+        ->where("book_id", "=", $id)
+        ->where("status", "=", 0)
+        ->orWhere("status", "=", 2)
+        ->count();
+        return $copies;
+    }
+
+    // 6. feladat
+    // Adott könyvhöz (book_id) tartozó példányok kölcsönzési adatai (with-del és DB-vel is).
+    public function konyvKolcsonAdas($id)
+    {
+        $copies = DB::table("copies as c")
+        ->select("l.user_id", "l.start")
+        ->join("lendings as l", "c.copy_id", "=", "l.copy_id")
+        ->where("c.book_id", "=", $id)
+        ->get();
+        return $copies;
     }
 }

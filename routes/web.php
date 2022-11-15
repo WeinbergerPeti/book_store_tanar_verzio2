@@ -43,8 +43,9 @@ Route::middleware( ['admin'])->group(function () {
 });
 
 //SIMPLE USER
-Route::middleware(['auth.basic'])->group(function () {
-    
+Route::middleware(['auth.basic'])->group(function () 
+{    
+    Route::get('/api/books', [BookController::class, 'index']);
     //user   
     Route::apiResource('/api/users', UserController::class);
     Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
@@ -57,10 +58,16 @@ Route::middleware(['auth.basic'])->group(function () {
 Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
 Route::apiResource('/api/copies', CopyController::class);
 Route::get('/api/lendings', [LendingController::class, 'index']); 
-Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
-Route::put('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']);
-Route::patch('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']);
-Route::post('/api/lendings', [LendingController::class, 'store']);
-Route::delete('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']);
+Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']); // lekérdez
+Route::put('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']); // minden adatot módosít
+Route::patch('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']); // bizonyos adatokat módosít
+Route::post('/api/lendings', [LendingController::class, 'store']); // tárolja az adatbázisba az adatokat
+Route::delete('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']); // törli az adott sort
+Route::get("/api/book_copies_count/{title}", [CopyController::class, "bookCopyCount"]);
+Route::get("/api/kemeny_kotes/{hardcovered}", [CopyController::class, "hardCover"]);
+Route::get("/api/year_copies/{year}", [CopyController::class, "yearCopies"]);
+Route::get("/api/raktarban", [CopyController::class, "raktarban"]);
+Route::get("/api/raktarban_levo_konyvek/{ev}/{id}", [CopyController::class, "raktarbanLevoKonyv"]);
+Route::get("/api/konyv_kolcson_adas/{id}", [CopyController::class, "konyvKolcsonAdas"]);
 
 require __DIR__.'/auth.php';

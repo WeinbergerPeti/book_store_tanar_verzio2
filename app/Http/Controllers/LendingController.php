@@ -66,4 +66,9 @@ class LendingController extends Controller
         $copies = Copy::all();
         return view('lending.new', ['users' => $users, 'copies' => $copies]);
     }
+
+    public function userLendingsListCopies()
+    {
+        
+    }
 }
