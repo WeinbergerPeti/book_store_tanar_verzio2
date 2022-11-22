@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CopyController;
 use App\Http\Controllers\LendingController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,13 @@ Route::middleware(['auth.basic'])->group(function ()
 //csak a tesztelés miatt van "kint"
 Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
 Route::apiResource('/api/copies', CopyController::class);
+
+// 2022.11.22 órai lekérdezések
+Route::apiResource("/api/reservations", ReservationController::class);
+Route::get("/api/elojegyzes", [ReservationController::class, "elojegyzes"]);
+Route::get("/api/konyvek_csoportositasa", [BookController::class, "konyvekCsoportositasa"]);
+// ---- VÉGE ----
+
 Route::get('/api/lendings', [LendingController::class, 'index']); 
 Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']); // lekérdez
 Route::put('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']); // minden adatot módosít

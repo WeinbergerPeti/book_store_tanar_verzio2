@@ -32,6 +32,9 @@ class LendingController extends Controller
         $lending->user_id = $request->user_id;
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
+        $lending->end = $request->end;
+        $lending->extension = $request->extension;
+        $lending->notice = $request->notice;
         $lending->save();
     }
 
@@ -41,6 +44,9 @@ class LendingController extends Controller
         $lending->user_id = $request->user_id;
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
+        $lending->end = $request->end;
+        $lending->extension = $request->extension;
+        $lending->notice = $request->notice;
         $lending->save();
     }
 

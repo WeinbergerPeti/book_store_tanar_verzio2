@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -40,5 +41,15 @@ class BookController extends Controller
     {	
         $copies = Book::with('copy_c')->where('title','=', $title)->get();
         return $copies;
+    }
+
+    // Csoportosítsd szerzőnként a könyveket (nem példányokat) a szerzők ABC szerinti növekvő sorrendjében!
+    public function konyvekCsoportositasa()
+    {
+        $books = DB::table("books as b")
+        ->select("b.author", "b.title")
+        ->orderBy("b.author")
+        ->get();
+        return $books;
     }
 }

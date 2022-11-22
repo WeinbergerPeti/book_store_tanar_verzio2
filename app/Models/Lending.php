@@ -18,14 +18,16 @@ class Lending extends Model
             ->where('user_id', '=', $this->getAttribute('user_id'))
             ->where('copy_id', '=', $this->getAttribute('copy_id'))
             ->where('start', '=', $this->getAttribute('start')); 
-
         return $query;
     } 
 
     protected $fillable = [
         'user_id',
         'copy_id',
-        'start'
+        'start',
+        "end",
+        "extension",
+        "notice"
     ];
 
     public function copy_c()

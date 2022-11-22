@@ -20,6 +20,9 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('copy_id')->references('copy_id')->on('copies');
             $table->date("start");
+            $table->date("end")->nullable();
+            $table->tinyInteger("extension")->default(0);
+            $table->integer("notice")->default(0);
             $table->timestamps();
         });
 
