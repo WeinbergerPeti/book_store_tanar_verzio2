@@ -52,4 +52,24 @@ class BookController extends Controller
         ->get();
         return $books;
     }
+
+    public function szerzoMin($szam)
+    {
+        $books=DB::table("books as b")
+        ->selectRaw("author, count(*)")
+        ->groupBy("author")
+        ->having("count(*)", ">=", $szam)
+        ->get();
+        return $books;
+    }
+
+    public function szerzoBetu($betu)
+    {
+        $books=DB::table("books as b")
+        ->select("author")
+        // ->whereRaw("author like '${betu}%'")
+        ->where("author", "like", $betu."%")
+        ->get();
+        return $books;
+    }
 }

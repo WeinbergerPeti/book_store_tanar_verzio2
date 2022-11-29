@@ -49,9 +49,21 @@ class ReservationController extends Controller
     {
         $user=Auth::user();
         $reservations = DB::table("reservations as r")
-        ->join("users as u", "r.user_id", "=", "u.id")
-        ->where("u.id", "=", $user)
+        // ->join("users as u", "r.user_id", "=", "u.id")
+        ->where("r.user_id", $user->id)
         ->count();
+        return $reservations;
+    }
+
+    // bizonyos napoknál régebbi előjegyzések listája
+    public function regebbi($nap)
+    {
+        $user=Auth::user();
+        $reservations = DB::table("reservations as r")
+        ->select("r.book_id", "r.start")
+        ->where("r.user_id", $user->id)
+        ->whereRaw("datediff(current_date, r.start) > ?", $nap)
+        ->get();
         return $reservations;
     }
 }

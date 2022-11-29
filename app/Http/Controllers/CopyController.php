@@ -144,4 +144,7 @@ class CopyController extends Controller
         ->get();
         return $copies;
     }
+
+    // Bejelentkezett felhasználó azon kölcsönzéseit add meg (copy_id és db), ahol egy példányt legalább db-szor (paraméteres fg) kölcsönzött ki!
+    
 }

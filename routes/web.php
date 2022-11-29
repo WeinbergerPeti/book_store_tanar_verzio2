@@ -43,6 +43,10 @@ Route::middleware( ['admin'])->group(function () {
     Route::get('/copy/list', [CopyController::class, 'listView']); 
 });
 
+Route::middleware(["librarian"])->group(function () {
+    Route::apiResource("/users", UserController::class);
+});
+
 //SIMPLE USER
 Route::middleware(['auth.basic'])->group(function () 
 {    
@@ -54,6 +58,14 @@ Route::middleware(['auth.basic'])->group(function ()
     //user lendings
     Route::get('/api/user_lendings', [LendingController::class, 'userLendingsList']);
     Route::get('/api/user_lendings_count', [LendingController::class, 'userLendingsCount']);
+
+    // reservation
+    Route::get("/api/elojegyzes", [ReservationController::class, "elojegyzes"]);
+
+    // book
+    Route::get("/api/konyvek_csoportositasa", [BookController::class, "konyvekCsoportositasa"]);
+    Route::get("/api/szerzo_min/{mennyiseg}", [BookController::class, "szerzoMin"]);
+    Route::get("/api/szerzo_betu/{kezdobetu}", [BookController::class, "szerzoBetu"]);
 });
 //csak a tesztelés miatt van "kint"
 Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
@@ -61,7 +73,7 @@ Route::apiResource('/api/copies', CopyController::class);
 
 // 2022.11.22 órai lekérdezések
 Route::apiResource("/api/reservations", ReservationController::class);
-Route::get("/api/elojegyzes", [ReservationController::class, "elojegyzes"]);
+// Route::get("/api/elojegyzes", [ReservationController::class, "elojegyzes"]);
 Route::get("/api/konyvek_csoportositasa", [BookController::class, "konyvekCsoportositasa"]);
 // ---- VÉGE ----
 

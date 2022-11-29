@@ -20,10 +20,12 @@ return new class extends Migration
             $table->foreignId("user_id")->references("id")->on("users");
             $table->date("start");
             $table->tinyInteger("message")->default(0);
+            $table->date("message_date")->nullable();
+            $table->tinyInteger("status")->default(0);
             $table->timestamps();
         });
 
-        Reservation::create(["book_id"=>1, "user_id" => 1, "start" => "2022.11.22", "message" =>1]);
+        Reservation::create(["book_id"=>1, "user_id" => 2, "start" => "2022.11.22", "message" =>1]);
     }
 
     /**
