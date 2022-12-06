@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CopyController;
 use App\Http\Controllers\LendingController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,9 @@ Route::middleware(['auth.basic'])->group(function ()
     Route::get("/api/konyvek_csoportositasa", [BookController::class, "konyvekCsoportositasa"]);
     Route::get("/api/szerzo_min/{mennyiseg}", [BookController::class, "szerzoMin"]);
     Route::get("/api/szerzo_betu/{kezdobetu}", [BookController::class, "szerzoBetu"]);
+
+    Route::get("mail_kuldes", [MailController::class, "index"]);
+    Route::get("email_kinezet", [MailController::class, "mailKinezet"]);
 });
 //csak a tesztelés miatt van "kint"
 Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
