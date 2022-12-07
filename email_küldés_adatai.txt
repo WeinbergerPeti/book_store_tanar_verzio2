@@ -1,0 +1,8 @@
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME="teszt.email.cim.fiok@gmail.com"
+MAIL_PASSWORD="owhbwbrunctbreot"
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS="teszt.email.cim.fiok@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
