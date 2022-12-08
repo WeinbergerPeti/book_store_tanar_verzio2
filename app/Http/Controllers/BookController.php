@@ -46,7 +46,7 @@ class BookController extends Controller
     // Csoportosítsd szerzőnként a könyveket (nem példányokat) a szerzők ABC szerinti növekvő sorrendjében!
     public function konyvekCsoportositasa()
     {
-        $books = DB::table("books as b")
+        $books = DB::table("books as b") // főtábla
         ->select("b.author", "b.title")
         ->orderBy("b.author")
         ->get();
@@ -70,6 +70,13 @@ class BookController extends Controller
         // ->whereRaw("author like '${betu}%'")
         ->where("author", "like", $betu."%")
         ->get();
+        return $books;
+    }
+
+    public function konyvekDb()
+    {
+        $books=DB::table("books as b")
+        ->count("book_id");
         return $books;
     }
 }

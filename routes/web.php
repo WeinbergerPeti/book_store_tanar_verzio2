@@ -35,7 +35,8 @@ Route::middleware( ['admin'])->group(function () {
     Route::put('/api/books/{id}', [BookController::class, 'update']);
     Route::delete('/api/books/{id}', [BookController::class, 'destroy']);
     //copies
-    Route::apiResource('/api/copies', CopyController::class);
+    // Route::apiResource('/api/copies', CopyController::class);
+    Route::get("/api/copies", [CopyController::class, "index"]);
     //queries
     Route::get('/api/book_copies/{title}', [BookController::class, 'bookCopies']);
     //view - copy
@@ -73,7 +74,6 @@ Route::middleware(['auth.basic'])->group(function ()
 });
 //csak a tesztelés miatt van "kint"
 Route::patch('/api/users/password/{id}', [UserController::class, 'updatePassword']);
-Route::apiResource('/api/copies', CopyController::class);
 
 // 2022.11.22 órai lekérdezések
 Route::apiResource("/api/reservations", ReservationController::class);
@@ -87,11 +87,13 @@ Route::put('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::clas
 Route::patch('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'update']); // bizonyos adatokat módosít
 Route::post('/api/lendings', [LendingController::class, 'store']); // tárolja az adatbázisba az adatokat
 Route::delete('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']); // törli az adott sort
-Route::get("/api/book_copies_count/{title}", [CopyController::class, "bookCopyCount"]);
+Route::get("/api/book_copies_count/{cim}", [CopyController::class, "bookCopyCount"]);
 Route::get("/api/kemeny_kotes/{hardcovered}", [CopyController::class, "hardCover"]);
 Route::get("/api/year_copies/{year}", [CopyController::class, "yearCopies"]);
 Route::get("/api/raktarban", [CopyController::class, "raktarban"]);
 Route::get("/api/raktarban_levo_konyvek/{ev}/{id}", [CopyController::class, "raktarbanLevoKonyv"]);
 Route::get("/api/konyv_kolcson_adas/{id}", [CopyController::class, "konyvKolcsonAdas"]);
+
+Route::get("/konyvek_db", [BookController::class, "konyvekDb"]);
 
 require __DIR__.'/auth.php';
