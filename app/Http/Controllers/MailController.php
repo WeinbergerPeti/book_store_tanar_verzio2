@@ -15,7 +15,7 @@ class MailController extends Controller
             "body" => "Szia Anya legyen szép napod! Szeretlek!"
         ];
 
-        Mail::to("leonaweinberger@gmail.com")->send(new DemoMail($mailData));
+        Mail::to("teszt.email.cim.fiok@gmail.com")->send(new DemoMail($mailData));
 
         dd("Sikeresen elküldve az email.");
     }

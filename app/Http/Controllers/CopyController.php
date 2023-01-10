@@ -15,6 +15,11 @@ class CopyController extends Controller
         $copies =  Copy::all();
         return $copies;
     }
+
+    public function index2(){
+        $copies =  Copy::all();
+        return $copies;
+    }
     
     public function show($id)
     {
@@ -51,6 +56,8 @@ class CopyController extends Controller
         return $copies;
     }
 
+   
+
     //view-k:
 
     public function newView()
@@ -75,11 +82,11 @@ class CopyController extends Controller
     }
 
     // 1. feladat
-    public function bookCopyCount($title)
+    public function bookCopyCount($cim)
     {
         $copies = DB::table("copies as c")
         ->join("books as b", "c.book_id", "=", "b.book_id")
-        ->where("b.title", "=", $title)
+        ->where("b.title", "=", $cim)
         ->count();
         return $copies;
     }
