@@ -96,4 +96,6 @@ Route::get("/api/konyv_kolcson_adas/{id}", [CopyController::class, "konyvKolcson
 
 Route::get("/konyvek_db", [BookController::class, "konyvekDb"]);
 
+Route::patch("/api/visszahozta/{copy_id}/{start}", [LendingController::class, "visszahozta"]);
+
 require __DIR__.'/auth.php';

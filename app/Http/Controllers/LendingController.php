@@ -7,6 +7,7 @@ use App\Models\Lending;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
@@ -76,5 +77,17 @@ class LendingController extends Controller
     public function userLendingsListCopies()
     {
         
+    }
+
+    public function visszahozta($copy_id, $start)
+    {
+        $user = Auth::user();
+        $lending = LendingController::show($user->id, $copy_id, $start);
+        $lending->end = date(now());
+        $lending->save();
+        DB::table("copies")
+        ->where("copy_id", $copy_id)
+        ->update(["status"=>0]);
+        // DB::select("CALL toStore(?)", array($copy_id));
     }
 }

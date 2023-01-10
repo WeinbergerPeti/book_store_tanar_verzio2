@@ -26,7 +26,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-10-06']);
+        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-10-06', "end" => "2023-01-10"]);
     }
 
     /**
