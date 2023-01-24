@@ -90,4 +90,6 @@ class LendingController extends Controller
         ->update(["status"=>0]);
         // DB::select("CALL toStore(?)", array($copy_id));
     }
+
+    
 }

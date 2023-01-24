@@ -18,7 +18,8 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         //bejelentkezett felhasználó: Auth::user()
-        if (Auth::user() && Auth::user()->permission == 0) { 
+        if (Auth::user() && Auth::user()->permission == 0) 
+        { 
             return $next($request); 
         } 
         return redirect('dashboard')->with('error','You have not admin access');
